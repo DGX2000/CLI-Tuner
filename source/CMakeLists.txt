@@ -3,6 +3,7 @@ set(sfml_libs sfml-system sfml-window sfml-graphics sfml-audio)
 
 file(GLOB source_files CONFIGURE_DEPENDS "*.cpp")
 add_executable(CliTuner ${source_files})
-target_link_libraries(CliTuner PRIVATE ${sfml_libs})
+# TODO: Include curses in a more modern way
+target_link_libraries(CliTuner PRIVATE ${sfml_libs} -lcurses)
 
 add_subdirectory(unittest)
