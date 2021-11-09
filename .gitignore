@@ -50,3 +50,10 @@ compile_commands.json
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
+
+# Doxygen output
+/doc/html
+/doc/latex
+
+# Ignore build if someone builds into this folder
+/build
