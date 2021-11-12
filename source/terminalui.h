@@ -1,7 +1,7 @@
 #ifndef TERMINALUI_H
 #define TERMINALUI_H
 
-#include <memory>
+#include <string>
 
 enum class UiEvent { PREVIOUS_INPUT, NEXT_INPUT, QUIT, NONE };
 
@@ -28,11 +28,14 @@ private:
     TerminalUi();
 
     void drawTitle() const;
-    void drawPitchIndicator();
-    void drawInputSelector();
-    void drawOptions();
+    void drawPitchIndicator() const;
+    void drawInputSelector() const;
+    void drawOptions() const;
 
 private:
+    std::string noteName;
+    int cents{0};
+
     double frequency{0.0};
     double volume{0.0};
 
