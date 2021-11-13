@@ -19,8 +19,10 @@ public:
     static TerminalUi& getInstance();
 
     void draw();
+
     void updateFrequency(double frequency);
     void updateVolume(double volume);
+    void updateInput(const std::string& input);
 
     UiEvent queryInput() const;
 
@@ -34,6 +36,7 @@ private:
 
 private:
     std::string noteName;
+    std::string input;
     int cents{0};
 
     double frequency{0.0};

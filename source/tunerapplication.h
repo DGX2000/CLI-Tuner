@@ -17,6 +17,9 @@ private:
     void handleEvents();
     void display();
 
+    void switchToNextInput();
+    void switchToPreviousInput();
+
 private:
     TerminalUi& ui;
     std::unique_ptr<TuningMediator> tuningMediator;

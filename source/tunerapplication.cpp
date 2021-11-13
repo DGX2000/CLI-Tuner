@@ -1,10 +1,14 @@
 #include "tunerapplication.h"
 
+#include <algorithm>
+
+#include "inpututil.h"
+
 TunerApplication::TunerApplication()
     : ui(TerminalUi::getInstance()),
       tuningMediator(new TuningMediator())
 {
-
+    ui.updateInput(tuningMediator->getInput());
 }
 
 void TunerApplication::run()
@@ -26,11 +30,11 @@ void TunerApplication::handleEvents()
     switch(event)
     {
         case UiEvent::PREVIOUS_INPUT:
-        // TODO: Tuning mediator, previous input
+        switchToPreviousInput();
         break;
 
         case UiEvent::NEXT_INPUT:
-        // TODO: Tuning mediator, next input
+        switchToNextInput();
         break;
 
         case UiEvent::QUIT:
@@ -45,5 +49,33 @@ void TunerApplication::handleEvents()
 void TunerApplication::display()
 {
     ui.draw();
+}
+
+void TunerApplication::switchToNextInput()
+{
+    auto inputs = InputUtil::getAllInputs();
+
+    auto currentInput = std::find(inputs.begin(), inputs.end(), tuningMediator->getInput());
+    if(currentInput != inputs.end() && currentInput != inputs.end()-1)
+    {
+        std::advance(currentInput, 1);
+
+        tuningMediator->setInput(*currentInput);
+        ui.updateInput(*currentInput);
+    }
+}
+
+void TunerApplication::switchToPreviousInput()
+{
+    auto inputs = InputUtil::getAllInputs();
+
+    auto currentInput = std::find(inputs.begin(), inputs.end(), tuningMediator->getInput());
+    if(currentInput != inputs.begin() && currentInput != inputs.end())
+    {
+        std::advance(currentInput, -1);
+
+        tuningMediator->setInput(*currentInput);
+        ui.updateInput(*currentInput);
+    }
 }
 

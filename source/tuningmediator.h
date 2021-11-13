@@ -2,6 +2,7 @@
 #define TUNINGMEDIATOR_H
 
 #include <memory>
+#include <string>
 
 #include "sampler.h"
 
@@ -15,6 +16,7 @@ public:
     double getVolume() const;
 
     void setInput(const std::string& name);
+    std::string getInput() const;
 
 private:
     std::unique_ptr<Sampler> sampler;

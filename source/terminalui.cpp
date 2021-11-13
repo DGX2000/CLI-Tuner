@@ -1,6 +1,7 @@
 #include "terminalui.h"
 
 #include <cmath>
+#include <numeric>
 
 #include "musicutil.h"
 #include "terminalbridge.h"
@@ -59,14 +60,19 @@ void TerminalUi::updateVolume(double volume)
     this->volume = volume;
 }
 
+void TerminalUi::updateInput(const std::string &input)
+{
+    this->input = input;
+}
+
 UiEvent TerminalUi::queryInput() const
 {
     auto inputCharacter = terminal::getInput();
-    if(inputCharacter == KEY_LEFT)
+    if(inputCharacter == KEY_LEFT || inputCharacter == 'A' || inputCharacter == 'a')
     {
         return UiEvent::PREVIOUS_INPUT;
     }
-    else if(inputCharacter == KEY_RIGHT)
+    else if(inputCharacter == KEY_RIGHT || inputCharacter == 'D' || inputCharacter == 'd')
     {
         return UiEvent::NEXT_INPUT;
     }
@@ -163,7 +169,6 @@ void TerminalUi::drawInputSelector() const
 {
     static std::string leftEnd(" < ");
     static std::string rightEnd(" > ");
-    static std::string sampleInput("SAMPLE INPUT MIGHT BE VERY LONG SO THIS NEEDS SOME SOLUTIONNNN");
     static std::string shortenedString;
 
     int center = columns / 2;
@@ -173,7 +178,7 @@ void TerminalUi::drawInputSelector() const
 
     int lengthAvailableForString =
             columns - static_cast<int>(leftEnd.length()) - static_cast<int>(rightEnd.length());
-    shortenedString = sampleInput.substr(0, lengthAvailableForString);
+    shortenedString = input.substr(0, lengthAvailableForString);
 
 
     stringPlacement.row = inputSelectorRow;
@@ -190,6 +195,64 @@ void TerminalUi::drawInputSelector() const
             center + static_cast<int>(shortenedString.length()) / 2;
     stringPlacement.str = rightEnd.c_str();
     terminal::put(stringPlacement);
+
+
+    // TODO: Draw volume
+    // 2 red blocks (0..-6dB)
+    // 3 yellow blocks (-6dB..-15dB)
+    // 4 green blocks (-15dB..-45dB)
+    auto volumeInt = static_cast<int>(volume);
+    const int maxGreenBlocks = 5;
+    const int maxYellowBlocks = 3;
+    const int maxRedBlocks = 2;
+
+    const int greenThreshold = 30;
+    const int yellowThreshold = 10;
+    const int redThreshold = 4;
+
+    int greenBlocks =
+            std::min(1 + (volumeInt + greenThreshold)/((greenThreshold-yellowThreshold)/maxGreenBlocks),
+                     maxGreenBlocks);
+    int yellowBlocks =
+            std::min(1 + (volumeInt + yellowThreshold)/((yellowThreshold-redThreshold)/maxYellowBlocks),
+                     maxYellowBlocks);
+    int redBlocks =
+            std::min(1 + (volumeInt + redThreshold)/((redThreshold)/maxRedBlocks),
+                     maxRedBlocks);
+
+    auto charPlacement = terminal::CharPlacement();
+    charPlacement.row = inputSelectorRow + 1;
+    charPlacement.c = ' ';
+
+    charPlacement.color = terminal::WHITE_TEXT_GREEN_BG;
+    for(; greenBlocks > 0; --greenBlocks)
+    {
+        charPlacement.col = center - greenBlocks;
+        terminal::put(charPlacement);
+
+        charPlacement.col = center + greenBlocks;
+        terminal::put(charPlacement);
+    }
+
+    charPlacement.color = terminal::WHITE_TEXT_YELLOW_BG;
+    for(; yellowBlocks > 0; --yellowBlocks)
+    {
+        charPlacement.col = center - maxGreenBlocks - yellowBlocks;
+        terminal::put(charPlacement);
+
+        charPlacement.col = center + maxGreenBlocks + yellowBlocks;
+        terminal::put(charPlacement);
+    }
+
+    charPlacement.color = terminal::WHITE_TEXT_RED_BG;
+    for(; redBlocks > 0; --redBlocks)
+    {
+        charPlacement.col = center - maxGreenBlocks - maxYellowBlocks - redBlocks;
+        terminal::put(charPlacement);
+
+        charPlacement.col = center + maxGreenBlocks + maxYellowBlocks + redBlocks;
+        terminal::put(charPlacement);
+    }
 }
 
 void TerminalUi::drawOptions() const

@@ -37,3 +37,8 @@ void TuningMediator::setInput(const std::string& name)
     sampler->setDevice(name);
     sampler->start();
 }
+
+std::string TuningMediator::getInput() const
+{
+    return sampler->getDevice();
+}
