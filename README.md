@@ -2,6 +2,8 @@
 
 An instrument tuner for the command-line.
 
+![Preview](preview.png)
+
 # Installation
 
 ## Preparation
@@ -36,3 +38,12 @@ make doc
 ```
 
 in the build directory that was previously prepared in the compilation step.
+
+# Roadmap
+
+- [ ] Clean up code (many TODOs in there and general ugliness to be fixed)
+- [ ] Add installation to CMake
+- [ ] Add packaging to CMake
+- [ ] Add documentation
+- [ ] Add a low-pass filter for the tuning (I suspect that on cheap laptop microphones, the tuning below ~150 Hz is inaccurate due to damping; have to verify and measure it though)
+- [ ] Fix crash when there is no input device at the moment

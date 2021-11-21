@@ -88,7 +88,7 @@ UiEvent TerminalUi::queryInput() const
 
 void TerminalUi::drawTitle() const
 {
-    static std::string title("CLI Tuner (0.1)");
+    static std::string title("CLI-Tuner");
 
     int center = columns / 2;
     int titleStart = center - static_cast<int>(title.length()) / 2;
