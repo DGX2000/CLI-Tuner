@@ -1,12 +1,22 @@
 # CLI-Tuner
 
-An instrument tuner for the command-line.
+CLI-Tuner is an instrument tuner for the command-line. It detects the current pitch of an audio signal from any input device (microphone, line-in, etc.) and shows the nearest note as well as the deviation in cents.
 
 ![Preview](preview.png)
 
 # Installation
 
-## Preparation
+CLI-Tuner can be either installed from source or from ready-made packages (deb/rpm).
+
+## Installation from Packages
+
+Choose the correct package for your distribution from the sidebar to the right and install it with your package manager.
+
+## Installation from Source
+
+If you want to install from source, go through the following steps.
+
+### Preparation
 
 The only required library for compilation is SFML 2.5.1 ("Simple and Fast Multimedia Library"). Head to SFML's [download](https://www.sfml-dev.org/download.php) page or - if you're on Linux - install it with your package manager.
 As an example for the Aptitude package manager (Debian), use:
@@ -15,7 +25,15 @@ As an example for the Aptitude package manager (Debian), use:
 sudo apt install libsfml-dev
 ```
 
-## Compilation
+Once you have the required SFML library, clone the repository (you need *git* for this):
+
+```
+git clone https://github.com/DGX2000/CLI-Tuner
+```
+
+Enter the folder and go on to the next step.
+
+### Compilation
 
 CMake is used as build system. On Linux the program can be built and compiled in the following way:
 
@@ -25,9 +43,15 @@ mkdir build && cd build && cmake ..
 make
 ```
 
-## Installation
+### Installation
 
-...
+CLI-Tuner can be installed to **/usr/bin** by executing:
+
+```
+sudo cmake --build . --target install
+```
+
+from inside the build directory.
 
 # Documentation
 
@@ -42,7 +66,7 @@ in the build directory that was previously prepared in the compilation step.
 # Roadmap
 
 - [ ] Clean up code (many TODOs in there and general ugliness to be fixed)
-- [ ] Add installation to CMake
+- [X] Add installation to CMake
 - [ ] Add packaging to CMake
 - [ ] Add documentation
 - [ ] Add a low-pass filter for the tuning (I suspect that on cheap laptop microphones, the tuning below ~150 Hz is inaccurate due to damping; have to verify and measure it though)
