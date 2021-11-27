@@ -3,8 +3,7 @@
 
 #include <cstdint>
 
-// TODO: Make generic
-
+template<typename T>
 class RunningAverageFilter
 {
 public:
@@ -19,7 +18,7 @@ public:
         mean = 0.0;
     }
 
-    void update(double sample)
+    void update(T sample)
     {
         ++numberOfSamples;
         mean += (sample - mean) / numberOfSamples;
@@ -27,7 +26,7 @@ public:
 
 private:
     std::uint64_t numberOfSamples{0};
-    double mean{0.0};
+    T mean{0.0};
 };
 
 #endif // RUNNINGAVERAGEFILTER_H

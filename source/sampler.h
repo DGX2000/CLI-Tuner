@@ -49,7 +49,7 @@ private:
 
 private:
     MedianFilter<std::uint64_t, SAMPLES_TO_FILTER> medianFilter;
-    RunningAverageFilter averageFilter;
+    RunningAverageFilter<double> averageFilter;
 
     std::atomic<double> currentPeriodLength{PERIOD_LENGTH_AT_START};
 

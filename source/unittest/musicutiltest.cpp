@@ -8,9 +8,9 @@ bool wasNoteCreatedCorrectly(double frequency, std::string letter, int octave)
     return note == MusicUtil::Note{letter, octave};
 }
 
-TEST_CASE("Note closest to frequency is correctly created")
+TEST_CASE("Music utility")
 {
-    SECTION("Exactly on the frequency")
+    SECTION("Create note from frequency")
     {
         REQUIRE(wasNoteCreatedCorrectly(440.0, "A", 4));
         REQUIRE(wasNoteCreatedCorrectly(82.41, "E", 2));

@@ -4,10 +4,6 @@
 #include <algorithm>
 #include <array>
 
-// TODO: Revise implementation from circular buffer style (not needed anymore)
-// to just counting up and then getting reset, also getMedian should be const,
-// the processing should happen in update once the array is filled
-
 template<typename T, std::size_t N>
 class MedianFilter
 {
