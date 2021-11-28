@@ -3,7 +3,10 @@
 
 #include <cstdint>
 
-
+/**
+ * A helper class for determining the fundamental frequency and volume
+ * of an audio signal.
+ */
 class AudioUtil
 {
 public:
