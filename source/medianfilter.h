@@ -4,6 +4,17 @@
 #include <algorithm>
 #include <array>
 
+/**
+ * @brief A filter that returns the median from a collection of samples.
+ *
+ * @details This filter is used in determining on which range of frequencies to focus on
+ * initially. The autocorrelation method for detecting the fundamental frequency is prone to
+ * catch some outliers (harmonics), therefore we put several samples into this filter to reject
+ * those outliers.
+ *
+ * @tparam T Data type.
+ * @tparam N Amount of samples to hold in filter.
+ */
 template<typename T, std::size_t N>
 class MedianFilter
 {
